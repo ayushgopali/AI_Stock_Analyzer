@@ -1,0 +1,18 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install dependencies
+COPY frontend/package*.json ./
+RUN npm install --silent
+
+# Copy source
+COPY frontend/ ./
+
+# Build
+RUN npm run build
+
+# Serve with a lightweight server (serve)
+RUN npm install -g serve@14
+EXPOSE 3000
+CMD ["serve", "-s", "build", "-l", "3000"]
